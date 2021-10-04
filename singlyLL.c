@@ -1,5 +1,10 @@
 #include <stdio.h>
 
+/**
+ * Read more about using
+ * typedef with structure in C
+ * here: https://www.tutorialspoint.com/cprogramming/c_typedef.htm
+ * */
 // Structure defination must be global
 typedef struct Node {
     int data;
