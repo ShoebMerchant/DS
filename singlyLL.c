@@ -15,6 +15,7 @@ typedef struct Node {
 // Function definitions
 void insertAtHead(Node **, int);
 void insertAtTail(Node **, int);
+void deleteNode(Node **, int key);
 void display(Node *);
 
 int main(int argc, char *argv[])
@@ -27,7 +28,9 @@ int main(int argc, char *argv[])
     {
         insertAtTail(&head, i);
     }
-    
+    deleteNode(&head,2);
+    deleteNode(&head, 1);
+    deleteNode(&head,2);
     display(head);
     return 0;
 }
@@ -45,7 +48,8 @@ void insertAtHead(Node** head_ref, int val){
 
     // 3. Make next of new node as head
     n -> next = (*head_ref);
-
+    printf("%d\n", *head_ref);
+    printf("%d\n", head_ref);
     // 4. move the head to point to the new node
     (*head_ref) = n;
 }
@@ -56,7 +60,7 @@ void insertAtHead(Node** head_ref, int val){
  */
 void insertAtTail(Node **head_ref, int val){
     // 1. Allocate node
-    Node *newNode = (struct Node*) malloc(sizeof(struct Node));
+    Node *newNode = (Node*) malloc(sizeof(Node));
 
     // 2. Create new node to iterate through while loop
     Node *tempNode = *head_ref;
@@ -103,4 +107,41 @@ void display(Node *head){
         head = head->next;
     }
     printf("NULL");
+}
+
+/**
+ * Given a reference (pointer to pointer) 
+ * to the head of a list and a key, 
+ * deletes the first occurrence 
+ * of key in linked list
+ */ 
+void deleteNode(Node ** head_ref, int key) {
+    // Store head node
+    Node *temp = *head_ref, *prev;
+
+    // If head node itself holds the key to 
+    // be deleted
+    if (temp != NULL && temp->data == key) {
+        *head_ref = temp->next;
+        free(temp);
+        return;
+    }
+
+    /**
+     * Search for the key to be deleted, keep track of the
+     * previous node as we need to change 'prev->next'
+     */
+    while (temp != NULL && temp->data != key) {
+        prev = temp;
+        temp = temp->next;
+    }
+
+    // If key was not present in linked list
+    if (temp == NULL)
+        return;
+    
+    // Unlink the node from linked list
+    prev->next = temp->next;
+
+    free(temp);// Free memory
 }
