@@ -15,8 +15,9 @@ typedef struct Node {
 // Function definitions
 void insertAtHead(Node **, int);
 void insertAtTail(Node **, int);
-void deleteNode(Node **, int key);
 void display(Node *);
+void deleteNode(Node **, int key);
+void deleteHead(Node **);
 
 int main(int argc, char *argv[])
 {
@@ -28,9 +29,11 @@ int main(int argc, char *argv[])
     {
         insertAtTail(&head, i);
     }
+    display(head);
     deleteNode(&head,2);
     deleteNode(&head, 1);
-    deleteNode(&head,2);
+    display(head);
+    deleteHead(&head);
     display(head);
     return 0;
 }
@@ -48,8 +51,7 @@ void insertAtHead(Node** head_ref, int val){
 
     // 3. Make next of new node as head
     n -> next = (*head_ref);
-    printf("%d\n", *head_ref);
-    printf("%d\n", head_ref);
+
     // 4. move the head to point to the new node
     (*head_ref) = n;
 }
@@ -103,10 +105,10 @@ void display(Node *head){
      * not by reference
      */
     while(head != NULL){
-        printf("%d ->", head->data);
+        printf("%d -> ", head->data);
         head = head->next;
     }
-    printf("NULL");
+    printf("NULL\n");
 }
 
 /**
@@ -122,8 +124,7 @@ void deleteNode(Node ** head_ref, int key) {
     // If head node itself holds the key to 
     // be deleted
     if (temp != NULL && temp->data == key) {
-        *head_ref = temp->next;
-        free(temp);
+        deleteHead(&*head_ref);
         return;
     }
 
@@ -144,4 +145,17 @@ void deleteNode(Node ** head_ref, int key) {
     prev->next = temp->next;
 
     free(temp);// Free memory
+}
+
+/**
+ * Given a reference (pointer to pointer) 
+ * to the head of a list, 
+ * deletes the head Node
+ */
+void deleteHead(Node **head_ref) {
+    if (*head_ref == NULL)return;
+    Node *to_delete = *head_ref;
+    *head_ref = to_delete->next;
+    free(to_delete);
+    return;
 }
