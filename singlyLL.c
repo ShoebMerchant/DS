@@ -21,6 +21,7 @@ void display(Node *);
 void deleteNode(Node **, int);
 void deleteHead(Node **);
 bool searchList(Node *, int);
+void revList(Node **);
 
 int main(int argc, char *argv[])
 {
@@ -39,8 +40,10 @@ int main(int argc, char *argv[])
     deleteHead(&head);
     display(head);
     searchList(head, 3) ? 
-        printf("Key Found") 
-        : printf("Key not found");
+        printf("Key Found\n") 
+        : printf("Key not found\n");
+    revList(&head);
+    display(head);
     return 0;
 }
 
@@ -197,4 +200,43 @@ bool searchList(Node *head, int key) {
 
     // If we didn't find the key
     return false;
+}
+
+/**
+ * Reverse a Linked List given 
+ * a reference (pointer to pointer)
+ * to the head of a list
+ */ 
+void revList(Node **head_ref) {
+    
+    /**
+     * The current pointer initially
+     * reference the head pointer and
+     * moves to the next pointer in
+     * every iteration. prev and next
+     * pointer also shows similar behavior.
+     * 
+     * As the head pointer after the list
+     * is reversed, must point to Null
+     * prev is initialized as Null pointer
+     */ 
+    Node *curr = *head_ref,
+        *prev = NULL,
+        *next;
+    
+    // If curr is null, then we have reached
+    // the end of the Linked List
+    while (curr != NULL) {
+        next = curr->next;
+        curr->next = prev;
+
+        prev = curr;
+        curr = next;
+    }
+
+    // Repositioning the head
+    *head_ref = prev;
+
+    // successfully reversed
+    return;
 }
