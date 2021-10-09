@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include<stdbool.h>
+
 /**
  * Read more about using
  * typedef with structure in C
@@ -16,8 +18,9 @@ typedef struct Node {
 void insertAtHead(Node **, int);
 void insertAtTail(Node **, int);
 void display(Node *);
-void deleteNode(Node **, int key);
+void deleteNode(Node **, int);
 void deleteHead(Node **);
+bool searchList(Node *, int);
 
 int main(int argc, char *argv[])
 {
@@ -35,6 +38,9 @@ int main(int argc, char *argv[])
     display(head);
     deleteHead(&head);
     display(head);
+    searchList(head, 3) ? 
+        printf("Key Found") 
+        : printf("Key not found");
     return 0;
 }
 
@@ -153,9 +159,42 @@ void deleteNode(Node ** head_ref, int key) {
  * deletes the head Node
  */
 void deleteHead(Node **head_ref) {
+    // Check if head is not null
     if (*head_ref == NULL)return;
+
+    // Create a pointer to the head
     Node *to_delete = *head_ref;
+
+    // make head point to the next of head
     *head_ref = to_delete->next;
+
+    // delete the previous head
     free(to_delete);
+
     return;
+}
+
+/**
+ * Given a pointer to the
+ * head of a list, search the list
+ * for a given key
+ */ 
+bool searchList(Node *head, int key) {
+    /**
+     * No need to create a tempNode
+     * as we recieve head pointers by value
+     * not by reference
+     */
+    while (head != NULL) {
+        
+        // Check if the key is found
+        if (head->data == key) {
+            return true;
+        }
+        // Otherwise move on to the next node
+        head = head->next;
+    }
+
+    // If we didn't find the key
+    return false;
 }
