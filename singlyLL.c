@@ -247,25 +247,45 @@ void revList(Node **head_ref) {
 }
 
 /**
+ * Function to recursively reverse a linked list
+ * and return a new pointer to the new Head of the 
+ * reversed Linked List
  * 
+ * to view a rough example
+ * of recursive calls : shorturl.at/fgCHY
  */
 Node *revListRecursive(Node **head_ref) {
 
+    // If we have reached the end of the Linked List
+    // Or the head is NULL
     if((*head_ref) == NULL || (*head_ref)->next == NULL) {
         return (*head_ref);
     }
 
+    // New Head to the end of the Linked List
     Node* newHead = revListRecursive(&(*head_ref)->next);
+ 
     (*head_ref)->next->next = (*head_ref);
+
+    // So that the previous head->next points at next
     (*head_ref)->next = NULL;
+
+    // Head of our reversed list
     return newHead;
 }
 
 /**
- * 
+ * To Print a LL in reverse
+ * using recursion
  */
 void reversePrint(Node * head) {
+    // Base case we have reached 
+    // the end of the Linked List
     if(!head) return;
+
+    // Recursive function call
     reversePrint(head->next);
+
+    // Printing the data
     printf("%d -> ", head->data);
 }
