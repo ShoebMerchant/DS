@@ -22,6 +22,8 @@ void deleteNode(Node **, int);
 void deleteHead(Node **);
 bool searchList(Node *, int);
 void revList(Node **);
+Node* revListRecursive(Node **);
+void reversePrint(Node *);
 
 int main(int argc, char *argv[])
 {
@@ -44,6 +46,9 @@ int main(int argc, char *argv[])
         : printf("Key not found\n");
     revList(&head);
     display(head);
+    Node *newHead = revListRecursive(&head);
+    display(newHead);
+    reversePrint(newHead);
     return 0;
 }
 
@@ -239,4 +244,28 @@ void revList(Node **head_ref) {
 
     // successfully reversed
     return;
+}
+
+/**
+ * 
+ */
+Node *revListRecursive(Node **head_ref) {
+
+    if((*head_ref) == NULL || (*head_ref)->next == NULL) {
+        return (*head_ref);
+    }
+
+    Node* newHead = revListRecursive(&(*head_ref)->next);
+    (*head_ref)->next->next = (*head_ref);
+    (*head_ref)->next = NULL;
+    return newHead;
+}
+
+/**
+ * 
+ */
+void reversePrint(Node * head) {
+    if(!head) return;
+    reversePrint(head->next);
+    printf("%d -> ", head->data);
 }
