@@ -20,6 +20,7 @@ void insertAtTail(Node **, int);
 void display(Node *);
 void deleteNode(Node **, int);
 void deleteHead(Node **);
+void deleteTail(Node **);
 bool searchList(Node *, int);
 void revList(Node **);
 Node* revListRecursive(Node **);
@@ -181,6 +182,31 @@ void deleteHead(Node **head_ref) {
 
     // delete the previous head
     free(to_delete);
+
+    return;
+}
+
+/**
+ * Given a reference (pointer to pointer) 
+ * to the head of a list, 
+ * deletes the tail Node
+ */
+void deleteTail(Node **head_ref) {
+    // Check if head is not null
+    if (*head_ref == NULL)return;
+
+    // Create a pointer to the head
+    Node *to_delete = *head_ref;
+
+    // While loop to the second last Node
+    while(to_delete->next->next != NULL)
+        to_delete = to_delete->next;
+
+    // delete the last Node
+    free(to_delete->next);
+
+    // The last node must point to NULL
+    to_delete->next = NULL;
 
     return;
 }
