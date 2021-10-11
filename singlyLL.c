@@ -176,6 +176,9 @@ void deleteHead(Node **head_ref) {
     // make head point to the next of head
     *head_ref = to_delete->next;
 
+    // Good practice
+    to_delete->next = NULL;
+
     // delete the previous head
     free(to_delete);
 
