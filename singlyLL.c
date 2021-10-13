@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
     display(head);
     deleteHead(&head);
     display(head);
-    searchList(head, 3) ? 
+    searchList(head, 7) ? 
         printf("Key Found\n") 
         : printf("Key not found\n");
     revList(&head);
@@ -66,7 +66,7 @@ void insertAtHead(Node** head_ref, int val){
 
     // 3. Make next of new node as head
     n -> next = (*head_ref);
-
+    
     // 4. move the head to point to the new node
     (*head_ref) = n;
 }
