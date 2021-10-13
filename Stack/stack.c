@@ -16,52 +16,59 @@
  * If Stack is empty, then top == NULL
  */
 
-struct stack {
+typedef struct Stack {
     int info;
-    struct stack *next;
-};
+    struct Stack *next;
+}Stack;
 
-void InitStack(struct stack **);
-void push(struct stack **, int);
-void pop(struct stack **);
+void InitStack(Stack **);
+void push(Stack **, int);
+void pop(Stack **);
+void display(Stack *);
 
 int main(int argc, char *argv[])
 {
-    struct stack *top;
+    Stack *top;
     InitStack(&top);
-    push(&top, 10);
-    push(&top, 20);
-    printf("%d\n", top->info);
-    pop(&top);
-    printf("%d\n", top->info);
+    for(int i=0; i<6; i++)
+        push(&top, 5*i);
+    display(top);
     return 0;
 }
 
-void InitStack(struct stack ** t) {
+void InitStack(Stack ** t) {
     *t=NULL;
 }
 
-void push(struct stack **t, int value) {
-    struct stack *p;
-    p=(struct stack *)malloc(sizeof(struct stack));
+void push(Stack **top_node, int value) {
+    Stack *p =(Stack *)malloc(sizeof(Stack));
     p->info = value;
     p->next = NULL;
-    if(*t==NULL) {
-        *t = p;
+    if(*top_node==NULL) {
+        *top_node = p;
         return;
     }
-    p->next = *t;
-    *t = p;
+    p->next = (*top_node);
+    *top_node = p;
 }
 
-void pop(struct stack **t) {
-    if(*t==NULL) {
+void pop(Stack **top_node) {
+    if(*top_node==NULL) {
         return;
     }
-    if((*t)->next == NULL) {
-        *t=NULL;
+    if((*top_node)->next == NULL) {
+        *top_node=NULL;
         return;
     }
-    (*t) = (*t)->next;
+    Stack *to_delete = (*top_node);
+    (*top_node) = (*top_node)->next;
+    free(to_delete);
     return;
+}
+
+void display(Stack *top_node) {
+    while(top_node != NULL) {
+        printf("%d | ", top_node->info);
+        pop(&top_node);
+    }
 }
