@@ -5,6 +5,7 @@
  */
 
 #include <stdio.h>
+#include <stdlib.h>
 
 /**
  * Dynamic Implementation of Queue:
@@ -24,6 +25,7 @@ int main(int argc, char *argv[])
     Queue *front, *rear;
     InitQueue(&front, &rear);
     Insert(&front, &rear, 10);
+    printf("%d\n", front->info);
     return 0;
 }
 
