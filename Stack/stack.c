@@ -54,10 +54,13 @@ void push(Stack **top_node, int value) {
 
 void pop(Stack **top_node) {
     if(*top_node==NULL) {
+        // When you try to pop when stack is empty
+        printf("Stack Underflow\n");
         return;
     }
     if((*top_node)->next == NULL) {
-        *top_node=NULL;
+        *top_node = NULL;
+        free(*top_node);
         return;
     }
     Stack *to_delete = (*top_node);
