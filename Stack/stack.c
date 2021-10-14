@@ -15,7 +15,6 @@
  * We are going to implement stack using SLL.
  * If Stack is empty, then top == NULL
  */
-
 typedef struct Stack {
     int info;
     struct Stack *next;
